@@ -2,7 +2,7 @@ let userGuess;
 let result;
 
 //her laver jeg en constant som vælger alle mine knapper
-const buttons = document.querySelectorAll("button");
+const buttons = document.querySelectorAll(".chooseButton");
 
 //her tilføjer jeg en event listerne til alle mine knapper
 buttons.forEach((button) => {
@@ -18,6 +18,7 @@ function getUserGuess(event) {
 }
 
 const buttonDiv = document.getElementById("buttons");
+const resetButton = document.querySelector(".reset");
 
 const draw = document.getElementById("draw");
 
@@ -129,29 +130,36 @@ function determenWinner(computerGuess) {
 
 function tie() {
   draw.classList.remove("hidden");
+
+  resetButton.classList.remove("hidden");
   //denne event listerne skal kun trigger en gang
-  buttonDiv.addEventListener("click", playAgian, { once: true });
+  resetButton.addEventListener("click", playAgian, { once: true });
 }
 
 function userWins() {
   win.classList.remove("hidden");
-  buttonDiv.addEventListener("click", playAgian, { once: true });
+  document.querySelector(".reset").classList.remove("hidden");
+
+  resetButton.classList.remove("hidden");
+  resetButton.addEventListener("click", playAgian, { once: true });
 }
 
 function userLoses() {
   lose.classList.remove("hidden");
-  buttonDiv.addEventListener("click", playAgian, { once: true });
+  document.querySelector(".reset").classList.remove("hidden");
+
+  resetButton.classList.remove("hidden");
+  resetButton.addEventListener("click", playAgian, { once: true });
 }
 
 function playAgian() {
+  //her tilføjer jeg hidden til texten igen
   lose.classList.add("hidden");
   win.classList.add("hidden");
   draw.classList.add("hidden");
+  resetButton.classList.add("hidden");
 
-  resetHand();
-}
-
-function resetHand() {
+  //her reseter jeg hænderne så de kun har klassen player
   allPlayers.forEach((player) => {
     player.classList = "player";
   });

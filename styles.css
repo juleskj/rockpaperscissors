@@ -113,8 +113,14 @@ h1 {
 
 #buttons {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+
   max-width: 50vw;
+}
+
+.gap {
+  display: flex;
+  gap: 20px;
 }
 
 #buttons.disabled button {
@@ -139,4 +145,12 @@ button.paper {
 
 button.scissors {
   background-image: url(button_scissors.png);
+}
+
+.reset {
+  background-color: rgb(113, 209, 113);
+  color: rgb(24, 24, 24);
+  letter-spacing: 1px;
+  font-family: "Luckiest Guy", cursive;
+  font-size: clamp(1rem, 1.0815rem + 0.2174vw, 1.25rem);
 }
