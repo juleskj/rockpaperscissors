@@ -1,71 +1,59 @@
 let userGuess;
 let result;
 
-const allButtons = document.getElementById("buttons");
+//her laver jeg en constant som vælger alle mine knapper
+const buttons = document.querySelectorAll("button");
+
+//her tilføjer jeg en event listerne til alle mine knapper
+buttons.forEach((button) => {
+  button.addEventListener("click", getUserGuess);
+});
+
+//henter jeg data-value fra mine kapper og laver den om til userGuess variablen og tilsidt sender den vider med til buttonClicked
+function getUserGuess(event) {
+  userGuess = event.target.getAttribute("data-value");
+  console.log("You selected:", userGuess);
+
+  buttonClicked(userGuess);
+}
+
+const buttonDiv = document.getElementById("buttons");
+
 const draw = document.getElementById("draw");
 
 const win = document.getElementById("win");
 
 const lose = document.getElementById("lose");
 
-const computerPlayer = document.getElementById("player2");
 const userPlayer = document.getElementById("player1");
+const computerPlayer = document.getElementById("player2");
 
 const allPlayers = document.querySelectorAll(".player");
 const player = document.querySelector(".player");
 
-const rock = document.querySelector(".rock");
-const paper = document.querySelector(".paper");
-const scissors = document.querySelector(".scissors");
-
-rock.addEventListener("mousedown", clickRock);
-paper.addEventListener("mousedown", clickPaper);
-scissors.addEventListener("mousedown", clickScissors);
-// document.querySelector(".scissors").addEventListener("mouseDown", playScissors);
-// document.querySelector(".paper").addEventListener("mouseDown", playPaper);
-
-function clickRock() {
+function buttonClicked() {
+  //her giver jeg alle spillere klassen shake
   allPlayers.forEach((player) => {
     player.classList.add("shake");
   });
 
-  document
-    .querySelector(".player")
-    .addEventListener("animationend", computerGuesses);
-
-  userGuess = "rock";
-}
-
-function clickPaper() {
-  userGuess = "paper";
-
-  allPlayers.forEach((player) => {
-    player.classList.add("shake");
-  });
-
-  player.addEventListener("animationend", computerGuesses);
-}
-
-function clickScissors() {
-  userGuess = "scissors";
-
-  allPlayers.forEach((player) => {
-    player.classList.add("shake");
-  });
-
+  //her lytter event listeren på at shake ender
   player.addEventListener("animationend", computerGuesses);
 }
 
 function computerGuesses() {
+  //her fjerne jeg shake igen
   allPlayers.forEach((player) => {
     player.classList.remove("shake");
   });
 
+  //her laver jeg array med choices og
   const choices = ["scissors", "rock", "paper"];
 
   // Generate a random integer between 0 and 2 and pick the corresponding value
   let computerGuess = choices[Math.floor(Math.random() * 3)];
 
+  //her sender jeg computerGuess vider til determenWinner
   determenWinner(computerGuess);
   console.log(computerGuess);
   console.log(userGuess);
@@ -141,17 +129,18 @@ function determenWinner(computerGuess) {
 
 function tie() {
   draw.classList.remove("hidden");
-  allButtons.addEventListener("click", playAgian, { once: true });
+  //denne event listerne skal kun trigger en gang
+  buttonDiv.addEventListener("click", playAgian, { once: true });
 }
 
 function userWins() {
   win.classList.remove("hidden");
-  allButtons.addEventListener("click", playAgian, { once: true });
+  buttonDiv.addEventListener("click", playAgian, { once: true });
 }
 
 function userLoses() {
   lose.classList.remove("hidden");
-  allButtons.addEventListener("click", playAgian, { once: true });
+  buttonDiv.addEventListener("click", playAgian, { once: true });
 }
 
 function playAgian() {
